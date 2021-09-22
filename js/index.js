@@ -18,6 +18,7 @@ if (document.location.protocol == "http:" && document.location.hostname != "loca
     videoElement,
     canvasElement,
     ui.cursor_position.bind(ui),
+    ui.click.bind(ui),
   );
 
   // debug only (to see x y when clicking either with mousse or with hand)
