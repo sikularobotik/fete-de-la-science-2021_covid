@@ -1,11 +1,23 @@
 export class UserInterface {
-  constructor() {
+  constructor(al) {
+    this.actionlist = al;
     this.cursor = document.createElement("div");
     document.body.appendChild(this.cursor);
     this.cursor.style.position = "absolute";
     this.cursor.style.width = "10px";
     this.cursor.style.height = "10px";
     this.zone = document.getElementById('cursor_zone').getBoundingClientRect();
+
+    this.init_action_buttons();
+  }
+
+  init_action_buttons() {
+    const btnlist = document.getElementsByClassName("ActionButton");
+    for (const btn of btnlist) {
+      btn.addEventListener('click', e => {
+	if (btn.actionclass) this.actionlist.add(new btn.actionclass());
+      });
+    }
   }
 
   zone_xy(x, y) {

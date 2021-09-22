@@ -17,7 +17,9 @@ if (document.location.protocol == "http:" && document.location.hostname != "loca
   const al = new ActionList(document.getElementById('ActionList'));
   document.getElementById('action_buttons_list').appendChild(ActionList.get_button_list_fragment());
 
-  const ui = new UserInterface();
+  const ui = new UserInterface(
+    al,
+  );
   const camanalyst = new CameraAnalysis(
     videoElement,
     canvasElement,
@@ -32,19 +34,6 @@ if (document.location.protocol == "http:" && document.location.hostname != "loca
   });
 
   var list = document.getElementById("ActionList");
-
-  // manage click event on actions on the left side
-  $("button").click(function() {
-    var fragment = document.createDocumentFragment();
-    // creat a new list element
-    var li = document.createElement('li');
-    // give it the button value as value
-    li.textContent  = $(this).val();
-    fragment.appendChild(li);
-    // and appen it to the ActionList
-    list.appendChild(fragment);
-
-  });
 
   // manage click event on actions on the right side
   list.addEventListener("click",function(e) {
