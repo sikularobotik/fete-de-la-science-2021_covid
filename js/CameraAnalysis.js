@@ -8,6 +8,8 @@ export class CameraAnalysis {
       const x0 = (canvasElement.width - w)/2;
       const y0 = (canvasElement.height - h)/2;
       canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+      canvasCtx.translate(canvasElement.width, 0);
+      canvasCtx.scale(-1, 1);
       canvasCtx.drawImage(results.image, x0, y0, w, h);
       if (results.multiHandLandmarks) {
         for (const landmarks of results.multiHandLandmarks) {
@@ -42,7 +44,7 @@ export class CameraAnalysis {
             canvasCtx.fill();
           }
 
-          if (fct_cursor_position) fct_cursor_position((landmarks[0].x+landmarks[9].x)/2, (landmarks[0].y+landmarks[9].y)/2, fingers < 2);
+          if (fct_cursor_position) fct_cursor_position(1-(landmarks[0].x+landmarks[9].x)/2, (landmarks[0].y+landmarks[9].y)/2, fingers < 2);
         }
       }
       canvasCtx.restore();
