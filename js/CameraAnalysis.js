@@ -17,7 +17,7 @@ export class CameraAnalysis {
           if ((landmarks[10].x-landmarks[0].x)**2 + (landmarks[10].y-landmarks[0].y)**2 < (landmarks[12].x-landmarks[0].x)**2 + (landmarks[12].y-landmarks[0].y)**2) fingers += 4;
           if ((landmarks[14].x-landmarks[0].x)**2 + (landmarks[14].y-landmarks[0].y)**2 < (landmarks[16].x-landmarks[0].x)**2 + (landmarks[16].y-landmarks[0].y)**2) fingers += 8;
           if ((landmarks[18].x-landmarks[0].x)**2 + (landmarks[18].y-landmarks[0].y)**2 < (landmarks[20].x-landmarks[0].x)**2 + (landmarks[20].y-landmarks[0].y)**2) fingers += 16;
-  
+
           canvasCtx.strokeStyle = 'blue';
           canvasCtx.lineWidth = 5;
           canvasCtx.beginPath();
@@ -34,7 +34,7 @@ export class CameraAnalysis {
           canvasCtx.moveTo(x0 + w * landmarks[0].x, y0 + h * landmarks[0].y);
           canvasCtx.lineTo(x0 + w * landmarks[17].x, y0 + h * landmarks[17].y);
           canvasCtx.stroke();
-  
+
           for (let i = 0; i < 5; i++) {
             canvasCtx.fillStyle = fingers & (1 << i) ? 'green' : 'red';
             canvasCtx.beginPath();
@@ -47,7 +47,7 @@ export class CameraAnalysis {
       }
       canvasCtx.restore();
     }
-    
+
     const hands = new Hands({locateFile: (file) => { return `./libs/${file}`; }});
     hands.setOptions({
       maxNumHands: 1,
@@ -59,9 +59,7 @@ export class CameraAnalysis {
     const camera = new Camera(videoElement, {
       onFrame: async () => {
         await hands.send({image: videoElement});
-      },
-      width: 1280,
-      height: 720
+      }
     });
     camera.start();
   }

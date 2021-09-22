@@ -12,26 +12,48 @@
 		<style>
 			* {
 				padding: 0;
-				margin: 0; 
+				margin: 0;
 			}
 			.input_video {
 				display: none;
 			}
 			.output_canvas {
 				position: absolute;
-				width: 100%;
-				height: 100%;
-				width: 100vw;
-				height: 100vh;
 			}
 		</style>
 	</head>
 
 	<body>
 		<div class="container">
-			<video class="input_video"></video>
-			<canvas class="output_canvas"></canvas>
+			<div class="row">
+				<div class="col-md-4">
+					<p>Actions possibles</p>
+				</div>
+				<div class="col-md-4">
+					<p>Actions à exécuter</p>
+				</div>
+				<div class="col-md-4">
+					<p>Camera</p>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-4">
+					</br>
+					</br>
+					<button id="1" name="1" value="Move">Move</button>
+					</br>
+					</br>
+					<button id="2" name="2" value="Rotate">Rotate</button>
+				</div>
+				<div class="col-md-4">
+					<ul id="ActionList"></ul>
+				</div>
+				<div class="col-md-4">
+						<video class="input_video"></video>
+						<canvas class="output_canvas"></canvas>
+				</div>
+			</div>
 		</div>
 	</body>
 </html>
-
