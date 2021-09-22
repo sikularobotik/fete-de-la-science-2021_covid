@@ -19,4 +19,32 @@ if (document.location.protocol == "http:" && document.location.hostname != "loca
     canvasElement,
     ui.cursor_position.bind(ui),
   );
+
+  // debug only (to see x y when clicking either with mousse or with hand)
+  document.addEventListener("click", function(event){
+    var el = document.elementFromPoint(event.clientX, event.clientY);
+    console.log(el.nodeName + " (from eventListener) X " + event.clientX +  " Y " + event.clientY);
+  });
+
+  var list = document.getElementById("ActionList");
+
+  // manage click event on actions on the left side
+  $("button").click(function() {
+    var fragment = document.createDocumentFragment();
+    // creat a new list element
+    var li = document.createElement('li');
+    // give it the button value as value
+    li.textContent  = $(this).val();
+    fragment.appendChild(li);
+    // and appen it to the ActionList
+    list.appendChild(fragment);
+
+  });
+
+  // manage click event on actions on the right side
+  list.addEventListener("click",function(e) {
+    if(e.target && e.target.nodeName == "LI") {
+        list.removeChild(e.target)
+    }
+  });
 }
