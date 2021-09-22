@@ -36,6 +36,9 @@ export class CameraAnalysis {
           canvasCtx.moveTo(x0 + w * landmarks[0].x, y0 + h * landmarks[0].y);
           canvasCtx.lineTo(x0 + w * landmarks[17].x, y0 + h * landmarks[17].y);
           canvasCtx.stroke();
+          canvasCtx.rect(canvasElement.width*0.15, canvasElement.height*0.15, canvasElement.width*0.7, canvasElement.height*0.7);
+          canvasCtx.lineWidth = 1;
+          canvasCtx.stroke();
 
           for (let i = 0; i < 5; i++) {
             canvasCtx.fillStyle = fingers & (1 << i) ? 'green' : 'red';
@@ -44,7 +47,9 @@ export class CameraAnalysis {
             canvasCtx.fill();
           }
 
-          if (fct_cursor_position) fct_cursor_position(1-(landmarks[0].x+landmarks[9].x)/2, (landmarks[0].y+landmarks[9].y)/2, fingers < 2);
+          const x = Math.min(Math.max(0, (1-(landmarks[0].x+landmarks[9].x)/2-0.15)/0.7), 1);
+          const y = Math.min(Math.max(0, ((landmarks[0].y+landmarks[9].y)/2-0.15)/0.7), 1);
+          if (fct_cursor_position) fct_cursor_position(x, y, fingers < 2);
         }
       }
       canvasCtx.restore();
