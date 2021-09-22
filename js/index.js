@@ -1,3 +1,4 @@
+import { ActionList } from "./ActionList.js"
 import { UserInterface } from "./UserInterface.js"
 import { CameraAnalysis } from "./CameraAnalysis.js"
 
@@ -12,6 +13,9 @@ if (document.location.protocol == "http:" && document.location.hostname != "loca
 
   canvasElement.width = canvasElement.clientWidth;
   canvasElement.height = canvasElement.clientHeight;
+
+  const al = new ActionList(document.getElementById('ActionList'));
+  document.getElementById('action_buttons_list').appendChild(ActionList.get_button_list_fragment());
 
   const ui = new UserInterface();
   const camanalyst = new CameraAnalysis(
