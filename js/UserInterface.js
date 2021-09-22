@@ -10,9 +10,9 @@ export class UserInterface {
   }
 
   cursor_position(x, y, closed) {
-    var xPos = (Math.round(x * window.screen.width)|0);
-    // TODO remove this 100 (ok for my computer but not in general
-    var yPos = (Math.round(y * window.screen.height)|0) - 100;
+    const zone = document.getElementById('cursor_zone').getBoundingClientRect();
+    const xPos = zone.left + (Math.round(x * (zone.right-zone.left))|0);
+    const yPos = zone.top + (Math.round(y * (zone.bottom-zone.top))|0);
     this.cursor.style.left = xPos + "px";
     this.cursor.style.top = yPos+ "px";
     this.cursor.style.background = closed ? "#ff0000" : "#000000";
