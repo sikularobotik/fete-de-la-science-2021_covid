@@ -14,11 +14,13 @@ export class CameraAnalysis {
       if (results.multiHandLandmarks) {
         for (const landmarks of results.multiHandLandmarks) {
           let fingers = 0;
-          if ((landmarks[ 3].x-landmarks[0].x)**2 + (landmarks[ 3].y-landmarks[0].y)**2 < (landmarks[ 4].x-landmarks[0].x)**2 + (landmarks[ 4].y-landmarks[0].y)**2) fingers += 1;
           if ((landmarks[ 6].x-landmarks[0].x)**2 + (landmarks[ 6].y-landmarks[0].y)**2 < (landmarks[ 8].x-landmarks[0].x)**2 + (landmarks[ 8].y-landmarks[0].y)**2) fingers += 2;
           if ((landmarks[10].x-landmarks[0].x)**2 + (landmarks[10].y-landmarks[0].y)**2 < (landmarks[12].x-landmarks[0].x)**2 + (landmarks[12].y-landmarks[0].y)**2) fingers += 4;
           if ((landmarks[14].x-landmarks[0].x)**2 + (landmarks[14].y-landmarks[0].y)**2 < (landmarks[16].x-landmarks[0].x)**2 + (landmarks[16].y-landmarks[0].y)**2) fingers += 8;
           if ((landmarks[18].x-landmarks[0].x)**2 + (landmarks[18].y-landmarks[0].y)**2 < (landmarks[20].x-landmarks[0].x)**2 + (landmarks[20].y-landmarks[0].y)**2) fingers += 16;
+
+          function z(a, b, o) { return ((a.y-o.y) * (b.x-o.x) - (a.x-o.x) * (b.y-o.y)); }
+          if (z(landmarks[4], landmarks[5], landmarks[0]) * z(landmarks[5], landmarks[17], landmarks[0]) > 0) fingers += 1;
 
           canvasCtx.strokeStyle = 'blue';
           canvasCtx.lineWidth = 5;
