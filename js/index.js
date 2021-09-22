@@ -32,13 +32,4 @@ if (document.location.protocol == "http:" && document.location.hostname != "loca
     var el = document.elementFromPoint(event.clientX, event.clientY);
     console.log(el.nodeName + " (from eventListener) X " + event.clientX +  " Y " + event.clientY);
   });
-
-  var list = document.getElementById("ActionList");
-
-  // manage click event on actions on the right side
-  list.addEventListener("click",function(e) {
-    if(e.target && e.target.nodeName == "LI") {
-        list.removeChild(e.target)
-    }
-  });
 }
