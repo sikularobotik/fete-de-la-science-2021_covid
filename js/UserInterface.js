@@ -9,6 +9,7 @@ export class UserInterface {
     this.zone = document.getElementById('cursor_zone').getBoundingClientRect();
 
     this.init_action_buttons();
+    this.init_save_button();
   }
 
   init_action_buttons() {
@@ -18,6 +19,12 @@ export class UserInterface {
 	if (btn.actionclass) this.actionlist.add(new btn.actionclass());
       });
     }
+  }
+
+  init_save_button() {
+    const btn = document.getElementById('btnSave');
+    const url = document.getElementById('robot_url');
+    btn.addEventListener('click', e => this.actionlist.save(url.value));
   }
 
   zone_xy(x, y) {

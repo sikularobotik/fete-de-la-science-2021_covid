@@ -17,8 +17,9 @@
 			.input_video {
 				display: none;
 			}
-			.output_canvas {
-				position: absolute;
+			input[type=text] {
+				width: 100%;
+				text-align: center;
 			}
 			button {
 				width: 100%;
@@ -42,6 +43,10 @@
 					<h2>Camera</h2>
 					<video class="input_video"></video>
 					<canvas class="output_canvas"></canvas>
+					<br/>
+					<input type="text" id="robot_url" value="http://192.168.0.99/" />
+					<br/>
+					<button id="btnSave">Enregistrer</button>
 				</div>
 			</div>
 		</div>
