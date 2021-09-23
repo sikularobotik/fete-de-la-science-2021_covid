@@ -56,6 +56,38 @@ export class ActionList {
     }
   }
 
+  save(url) {
+    const json = {
+      "actions": [
+        {
+          "_type": "VariableWait",
+          "operation": "=",
+          "source": "rr_robotctrl",
+          "timeout": "-1",
+          "value": "1",
+          "varname": "sensors.tor.jack"
+        },
+        {
+          "_type": "VariableWait",
+          "operation": "=",
+          "source": "rr_robotctrl",
+          "timeout": "-1",
+          "value": "0",
+          "varname": "sensors.tor.jack"
+        },
+      ],
+      "desc": "Match par interface sans contact pour la Fête de la Science",
+      "name": "FdS"
+    };
+    for (const action of this.list) {
+      if (action.json) json.actions.push(action.json());
+    }
+    const u = new URL('/configs/multiseq/match__fete_de_la_science.json', url);
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', u.href, true);
+    xhr.send(JSON.stringify(json));
+  }
+
   static get_button_list_fragment() {
     const fragment = document.createDocumentFragment();
     for (const c of [MoveAction, RotateAction]) {
