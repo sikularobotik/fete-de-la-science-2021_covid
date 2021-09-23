@@ -8,22 +8,56 @@ function btnRm() {
 class MoveAction {
   static label = 'Avancer / Reculer';
 
+  constructor() {
+    this.distance = 1;
+  }
+
+  set_distance(v) {
+    this.distance = v;
+  }
+
   li() {
     const li = document.createElement('li');
-    li.textContent = MoveAction.label;
+    if (this.distance < 0) {
+      li.textContent = "Reculer de " + Math.round(this.distance * -100) + " cm";
+    } else {
+      li.textContent = "Avancer de " + Math.round(this.distance * 100) + " cm";
+    }
     li.appendChild(btnRm());
     return li;
+  }
+
+  json() {
+    return {
+      "_type": "MoveLine",
+      "distance": "" + this.distance
+    };
   }
 }
 
 class RotateAction {
   static label = 'Tourner';
 
+  constructor() {
+    this.angle = 0;
+  }
+
+  set_angle(a) {
+    this.angle = a;
+  }
+
   li() {
     const li = document.createElement('li');
-    li.textContent = RotateAction.label;
+    li.textContent = "Tourner de " + this.angle + "°";
     li.appendChild(btnRm());
     return li;
+  }
+
+  json() {
+    return {
+      "_type": "MoveRotate",
+      "angle": "" + this.angle
+    };
   }
 }
 
