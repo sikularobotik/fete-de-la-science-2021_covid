@@ -1,8 +1,25 @@
-function btnRm() {
-  const btn = document.createElement('button');
-  btn.textContent = '×';
-  btn.classList.add('ActionRemove');
-  return btn;
+function btns() {
+  const div = document.createElement('div');
+
+  const btnDown = document.createElement('button');
+  btnDown.textContent = '↓';
+  btnDown.classList.add('ActionDown');
+  btnDown.style.width = '33%';
+  div.appendChild(btnDown);
+
+  const btnUp = document.createElement('button');
+  btnUp.textContent = '↑';
+  btnUp.classList.add('ActionUp');
+  btnUp.style.width = '33%';
+  div.appendChild(btnUp);
+
+  const btnRm = document.createElement('button');
+  btnRm.textContent = '×';
+  btnRm.classList.add('ActionRemove');
+  btnRm.style.width = '33%';
+  div.appendChild(btnRm);
+
+  return div;
 }
 
 class MoveAction {
@@ -23,7 +40,7 @@ class MoveAction {
     } else {
       li.textContent = "Avancer de " + Math.round(this.distance * 100) + " cm";
     }
-    li.appendChild(btnRm());
+    li.appendChild(btns());
     return li;
   }
 
@@ -49,7 +66,7 @@ class RotateAction {
   li() {
     const li = document.createElement('li');
     li.textContent = "Tourner de " + this.angle + "°";
-    li.appendChild(btnRm());
+    li.appendChild(btns());
     return li;
   }
 
@@ -75,19 +92,47 @@ export class ActionList {
   add_dom(action) {
     const li = action.li();
     const actionlist = this;
+    for (const btn of li.getElementsByClassName('ActionUp')) {
+      btn.addEventListener('click', e => actionlist.up(action));
+    }
+    for (const btn of li.getElementsByClassName('ActionDown')) {
+      btn.addEventListener('click', e => actionlist.down(action));
+    }
     for (const btn of li.getElementsByClassName('ActionRemove')) {
       btn.addEventListener('click', e => actionlist.remove(action));
     }
     this.ul.appendChild(li);
   }
 
-  remove(action) {
-    const idx = this.list.indexOf(action);
-    if (idx > -1) this.list.splice(idx, 1);
+  refresh_dom() {
     this.ul.innerHTML = '';
     for (const e of this.list) {
       this.add_dom(e);
     }
+  }
+
+  up(action) {
+    const idx = this.list.indexOf(action);
+    if (idx < 1) return;
+    const e = this.list[idx];
+    this.list.splice(idx, 1);
+    this.list.splice(idx-1, 0, e);
+    this.refresh_dom();
+  }
+
+  down(action) {
+    const idx = this.list.indexOf(action);
+    if (idx > this.list.length - 2) return;
+    const e = this.list[idx+1];
+    this.list.splice(idx+1, 1);
+    this.list.splice(idx, 0, e);
+    this.refresh_dom();
+  }
+
+  remove(action) {
+    const idx = this.list.indexOf(action);
+    if (idx > -1) this.list.splice(idx, 1);
+    this.refresh_dom();
   }
 
   save(url) {
