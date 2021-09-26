@@ -2,6 +2,7 @@ export class CameraAnalysis {
   constructor(videoElement, canvasElement, fct_cursor_position, fct_click) {
     const canvasCtx = canvasElement.getContext('2d');
     let was_closed = false;
+    let hand_found_reset = 0;
     function onResults(results) {
       canvasCtx.save();
       const w = Math.min(canvasElement.width, canvasElement.height * 16/9);
@@ -13,6 +14,12 @@ export class CameraAnalysis {
       canvasCtx.scale(-1, 1);
       canvasCtx.drawImage(results.image, x0, y0, w, h);
       if (results.multiHandLandmarks) {
+        if (results.multiHandLandmarks.length == 0) {
+          if (hand_found_reset < 11) hand_found_reset++;
+          if (hand_found_reset == 10 && fct_cursor_position) fct_cursor_position(undefined, undefined, false);
+        } else {
+          hand_found_reset = 0;
+        }
         for (const landmarks of results.multiHandLandmarks) {
           let fingers = 0;
           if ((landmarks[ 6].x-landmarks[0].x)**2 + (landmarks[ 6].y-landmarks[0].y)**2 < (landmarks[ 8].x-landmarks[0].x)**2 + (landmarks[ 8].y-landmarks[0].y)**2) fingers += 2;

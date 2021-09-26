@@ -26,6 +26,7 @@ export class UserInterface {
   }
 
   zone_xy(x, y) {
+    if (!x || !y) return [-100, -100];
     return [
       this.zone.left + (Math.round(x * (this.zone.right-this.zone.left))|0),
       this.zone.top + (Math.round(y * (this.zone.bottom-this.zone.top))|0),
