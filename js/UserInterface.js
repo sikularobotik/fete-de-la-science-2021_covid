@@ -2,10 +2,8 @@ export class UserInterface {
   constructor(al) {
     this.actionlist = al;
     this.cursor = document.createElement("div");
+    this.cursor.id = 'cursor';
     document.body.appendChild(this.cursor);
-    this.cursor.style.position = "absolute";
-    this.cursor.style.width = "10px";
-    this.cursor.style.height = "10px";
     this.zone = document.getElementById('cursor_zone').getBoundingClientRect();
 
     this.init_action_buttons();
@@ -38,7 +36,10 @@ export class UserInterface {
     const [xPos, yPos] = this.zone_xy(x, y);
     this.cursor.style.left = xPos + "px";
     this.cursor.style.top = yPos+ "px";
-    this.cursor.style.background = closed ? "#ff0000" : "#000000";
+    if (closed)
+      this.cursor.classList.add('active');
+    else
+      this.cursor.classList.remove('active');
   }
 
   click(x, y) {

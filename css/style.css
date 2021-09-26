@@ -25,3 +25,12 @@ button {
 	text-align: center;
 	border-radius: 15px;
 }
+#cursor {
+	position: absolute;
+	width: 10px;
+	height: 10px;
+	background: #000;
+}
+#cursor.active {
+	background: #f00;
+}
