@@ -27,10 +27,11 @@ button {
 }
 #cursor {
 	position: absolute;
-	width: 10px;
-	height: 10px;
-	background: #000;
+	width: 32;
+	height: 32;
+	transform: translate(-16px, -16px);
+	content:url(hand_off.png);
 }
 #cursor.active {
-	background: #f00;
+	content:url(hand_on.png);
 }
