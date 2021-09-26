@@ -1,7 +1,3 @@
-* {
-	padding: 0;
-	margin: 0;
-}
 .input_video {
 	display: none;
 }
@@ -14,4 +10,18 @@ button {
 	height: 4em;
 	font-size: large;
 }
-
+#ActionList {
+	margin: 0;
+	padding: 0;
+}
+#ActionList li {
+	list-style: none;
+	margin: 0 0 10px 0;
+	padding: 10px;
+	background: #e5ff80;
+	color: #000000;
+	font-weight: bold;
+	font-size: large;
+	text-align: center;
+	border-radius: 15px;
+}
