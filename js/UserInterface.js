@@ -3,6 +3,8 @@ export class UserInterface {
     this.actionlist = al;
     this.cursor = document.createElement("div");
     this.cursor.id = 'cursor';
+    this.cursor.style.left = "-100px";
+    this.cursor.style.top = "-100px";
     document.body.appendChild(this.cursor);
     this.zone = document.getElementById('cursor_zone').getBoundingClientRect();
 
