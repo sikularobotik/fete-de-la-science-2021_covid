@@ -16,6 +16,10 @@ button {
 .output_canvas {
 	width: 100%;
 }
+#actions_column {
+	max-height: 100vh;
+	overflow: auto;
+}
 #ActionList {
 	margin: 0;
 	padding: 0;
