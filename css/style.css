@@ -13,6 +13,9 @@ button {
 	height: 4em;
 	font-size: large;
 }
+.output_canvas {
+	width: 100%;
+}
 #ActionList {
 	margin: 0;
 	padding: 0;
