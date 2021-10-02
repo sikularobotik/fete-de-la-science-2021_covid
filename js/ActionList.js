@@ -39,6 +39,10 @@ class MoveAction {
     this.distance = v;
   }
 
+  set_value(v) {
+    this.set_distance(v/100);
+  }
+
   li() {
     const li = document.createElement('li');
     if (this.distance < 0) {
@@ -73,6 +77,10 @@ class RotateAction {
 
   set_angle(a) {
     this.angle = a;
+  }
+
+  set_value(a) {
+    this.set_angle(a);
   }
 
   li() {

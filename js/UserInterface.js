@@ -27,10 +27,11 @@ export class UserInterface {
   validate_modal(actionlist) {
     let myButton = document.getElementById("ValidateAction");
     let modalOut =  document.getElementsByTagName("output")[0];
-    myButton.actionclass.attributes.value = modalOut.value;
-
-    console.log(myButton.actionclass);
-    if (myButton.actionclass) actionlist.add(new myButton.actionclass());
+    if (myButton.actionclass){
+      const action = new myButton.actionclass();
+      action.set_value(modalOut.value);
+      actionlist.add(action);
+     }
   }
 
   init_save_button() {

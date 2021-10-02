@@ -39,6 +39,7 @@ button {
 	position: absolute;
 	width: 32;
 	height: 32;
+	z-index: 1100;
 	transform: translate(-16px, -16px);
 	content:url(hand_off.png);
 }
