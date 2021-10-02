@@ -14,10 +14,23 @@ export class UserInterface {
   init_action_buttons() {
     const btnlist = document.getElementsByClassName("ActionButton");
     for (const btn of btnlist) {
-      btn.addEventListener('click', e => {
-	if (btn.actionclass) this.actionlist.add(new btn.actionclass());
-      });
+      if(btn.dataset.toggle != "modal"){
+        btn.addEventListener('click', e => {
+  	       if (btn.actionclass) this.actionlist.add(new btn.actionclass());
+        });
+      }
     }
+    const validateButton = document.getElementById("ValidateAction");
+    validateButton.addEventListener('click', this.validate_modal.bind(event,this.actionlist));
+  }
+
+  validate_modal(actionlist) {
+    let myButton = document.getElementById("ValidateAction");
+    let modalOut =  document.getElementsByTagName("output")[0];
+    myButton.actionclass.attributes.value = modalOut.value;
+
+    console.log(myButton.actionclass);
+    if (myButton.actionclass) actionlist.add(new myButton.actionclass());
   }
 
   init_save_button() {
