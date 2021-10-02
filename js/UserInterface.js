@@ -6,7 +6,6 @@ export class UserInterface {
     this.cursor.style.left = "-100px";
     this.cursor.style.top = "-100px";
     document.body.appendChild(this.cursor);
-    this.zone = document.getElementById('cursor_zone').getBoundingClientRect();
 
     this.init_action_buttons();
     this.init_save_button();
@@ -29,9 +28,10 @@ export class UserInterface {
 
   zone_xy(x, y) {
     if (!x || !y) return [-100, -100];
+    const zone = document.getElementById('cursor_zone').getBoundingClientRect();
     return [
-      this.zone.left + (Math.round(x * (this.zone.right-this.zone.left))|0),
-      this.zone.top + (Math.round(y * (this.zone.bottom-this.zone.top))|0),
+      zone.left + (Math.round(x * (zone.right-zone.left))|0),
+      zone.top + (Math.round(y * (zone.bottom-zone.top))|0),
     ];
   }
 
