@@ -24,6 +24,11 @@ function btns() {
 
 class MoveAction {
   static label = 'Avancer / Reculer';
+  static attributes = {
+    "toggle" : "modal",
+    "target" : "#actionModal",
+    "value"  : 0
+  };
 
   constructor() {
     this.distance = 1;
@@ -54,6 +59,11 @@ class MoveAction {
 
 class RotateAction {
   static label = 'Tourner';
+  static attributes = {
+    "toggle" : "modal",
+    "target" : "#actionModal",
+    "value"  : 0
+  };
 
   constructor() {
     this.angle = 0;
@@ -174,6 +184,7 @@ export class ActionList {
       btn.textContent  = c.label;
       btn.classList.add("ActionButton");
       btn.actionclass = c;
+      if (c.attributes) Object.assign(btn.dataset, c.attributes);
       fragment.appendChild(btn);
       fragment.appendChild(document.createElement('br'));
     }
