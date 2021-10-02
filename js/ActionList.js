@@ -29,6 +29,7 @@ class MoveAction {
     "target" : "#actionModal",
     "value"  : 0
   };
+  static linkedDOM = ".moveRange";
 
   constructor() {
     this.distance = 1;
@@ -64,6 +65,7 @@ class RotateAction {
     "target" : "#actionModal",
     "value"  : 0
   };
+  static linkedDOM = ".rapKnob";
 
   constructor() {
     this.angle = 0;

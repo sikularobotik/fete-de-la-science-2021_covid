@@ -63,3 +63,40 @@ export class UserInterface {
     document.elementsFromPoint(xPos, yPos).forEach(e => e.click());
   }
 }
+
+$('#rotateKnob').jsRapKnob({
+  position:0.5,
+  step:10,
+  onChange:function(value){
+     $(".rapKnobCaption",this).text('Angle ' + (Math.floor(value * 360)-180) + '°');
+     $('#modalOutput').val(Math.floor(value * 360)-180);
+  },
+});
+
+$('#moveRange').attr({
+    min:-50,
+    max:50,
+    step:2,
+    value:0,
+});
+$('#moveRange').on("input change", function() {
+  $('#modalOutput').val(this.value);
+});
+
+$('#actionModal').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget)[0]; // Button that triggered the modal
+  var thisAction = button.actionclass;
+  document.getElementById("ValidateAction").actionclass = thisAction;
+
+  // Update the modal's content
+  var modal = $(this)
+  modal.find('.modal-title').text(button.textContent);
+
+  let domToHide = modal.find('.modal-body').children()
+  domToHide.each(function(index, element) {
+    if(element.id != "modalOutput") element.style.display = 'none';
+  });
+
+  let domToShow = modal.find('.modal-body').find(thisAction.linkedDOM)[0];
+  domToShow.style.display = 'block';
+})
