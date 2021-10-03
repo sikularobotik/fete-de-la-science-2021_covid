@@ -61,7 +61,18 @@ export class UserInterface {
 
   click(x, y) {
     const [xPos, yPos] = this.zone_xy(x, y);
-    document.elementsFromPoint(xPos, yPos).forEach(e => e.click());
+    const ev = new MouseEvent('click', {
+      'view': window,
+      'bubbles': true,
+      'cancelable': true,
+      'clientX': xPos,
+      'clientY': yPos
+    });
+    for (const el of document.elementsFromPoint(xPos, yPos)) {
+      if (el == this.cursor) continue;
+      el.dispatchEvent(ev);
+      break;
+    }
   }
 }
 
