@@ -91,6 +91,14 @@ $('#moveRange').attr({
     step:2,
     value:0,
 });
+$('#moveRange').on("click", function(e) {
+  const t = e.target;
+  const r = t.getBoundingClientRect();
+  const min = Number(t.min);
+  const max = Number(t.max);
+  t.value = Math.round((e.clientX-r.left)/(r.right-r.left)*(max-min)+min);
+  t.dispatchEvent(new Event('change'));
+});
 $('#moveRange').on("input change", function() {
   $('#modalOutput').val(this.value);
 });
