@@ -57,8 +57,8 @@ export class CameraAnalysis {
             canvasCtx.fill();
           }
 
-          const x = Math.min(Math.max(0, (1-(landmarks[0].x+landmarks[9].x)/2-0.15)/0.7), 1);
-          const y = Math.min(Math.max(0, ((landmarks[0].y+landmarks[9].y)/2-0.15)/0.7), 1);
+          const x = Math.min(Math.max(0, (1-(landmarks[0].x)-0.15)/0.7), 1);
+          const y = Math.min(Math.max(0, ((landmarks[0].y)-0.15)/0.7), 1);
           const closed = fingers < 2;
           if (fct_cursor_position) fct_cursor_position(x, y, closed);
           if (closed && !was_closed && fct_click) fct_click(x, y);
