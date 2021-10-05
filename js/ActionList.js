@@ -169,7 +169,7 @@ export class ActionList {
     this.refresh_dom();
   }
 
-  save(url) {
+  save(url, fct) {
     const json = {
       "actions": [
         {
@@ -198,6 +198,9 @@ export class ActionList {
     const u = new URL('/configs/multiseq/match__fete_de_la_science.json', url);
     const xhr = new XMLHttpRequest();
     xhr.open('POST', u.href, true);
+    xhr.onload = () => {
+      fct(xhr.status);
+    };
     xhr.send(JSON.stringify(json));
   }
 

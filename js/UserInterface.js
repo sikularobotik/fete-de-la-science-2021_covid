@@ -21,7 +21,13 @@ export class UserInterface {
   init_save_button() {
     const btn = document.getElementById('btnSave');
     const url = document.getElementById('robot_url');
-    btn.addEventListener('click', e => this.actionlist.save(url.value));
+    btn.addEventListener('click', e => {
+      btn.disabled = true;
+      this.actionlist.save(url.value, code => {
+        btn.disabled = false;
+	alert(code == 200 ? "Envoyé" : "Erreur d'envoi");
+      });
+    });
   }
 
   init_modal() {
