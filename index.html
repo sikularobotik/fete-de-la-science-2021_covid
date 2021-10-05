@@ -37,23 +37,21 @@
 		</div>
 
 		<!-- Modal for actions -->
-	  <div class="modal fade" id="actionModal" tabindex="-1" role="dialog" data-backdrop="false">
-	    <div class="modal-dialog" role="document">
-	      <div class="modal-content">
-	        <div class="modal-header">
-	          <h4 class="modal-title" id="myModalTitle">Distance à parcourir</h4>
-	        </div>
-	        <div class="modal-body" align="center">
-						<div id="rotateKnob" style="display:none"></div>
-	          <input id="moveRange" class="moveRange" type="range" style="display:none">
-						<output id="modalOutput">0</output>
-	        </div>
-	        <div class="modal-footer">
-	          <button class="btn btn-default" type="button" data-dismiss="modal">Annuler</button>
-	          <button class="btn btn-primary" id="ValidateAction" type="button" data-dismiss="modal">Valider</button>
-	        </div>
-	      </div>
-	    </div>
-	  </div>
+		<div class="modal fade" id="actionModal" tabindex="-1" role="dialog" data-backdrop="false">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 id="ActionModalTitle"></h4>
+					</div>
+					<div class="modal-body" align="center">
+						<div class="container-fluid" id="ActionModalBody"></div>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-default" type="button" data-dismiss="modal">Annuler</button>
+						<button class="btn btn-primary" id="ValidateAction" type="button" data-dismiss="modal">Valider</button>
+					</div>
+				</div>
+			</div>
+		</div>
 	</body>
 </html>

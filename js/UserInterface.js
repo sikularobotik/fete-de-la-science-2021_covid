@@ -1,6 +1,7 @@
 export class UserInterface {
   constructor(al) {
     this.actionlist = al;
+    this.modalaction = null;
     this.cursor = document.createElement("div");
     this.cursor.id = 'cursor';
     this.cursor.style.left = "-100px";
@@ -9,35 +10,46 @@ export class UserInterface {
 
     this.init_action_buttons();
     this.init_save_button();
+    this.init_modal();
   }
 
   init_action_buttons() {
-    const btnlist = document.getElementsByClassName("ActionButton");
-    for (const btn of btnlist) {
-      if(btn.dataset.toggle != "modal"){
-        btn.addEventListener('click', e => {
-  	       if (btn.actionclass) this.actionlist.add(new btn.actionclass());
-        });
-      }
-    }
-    const validateButton = document.getElementById("ValidateAction");
-    validateButton.addEventListener('click', this.validate_modal.bind(event,this.actionlist));
-  }
-
-  validate_modal(actionlist) {
-    let myButton = document.getElementById("ValidateAction");
-    let modalOut =  document.getElementsByTagName("output")[0];
-    if (myButton.actionclass){
-      const action = new myButton.actionclass();
-      action.set_value(modalOut.value);
-      actionlist.add(action);
-     }
+    for (const btn of document.getElementsByClassName("ActionButton"))
+      btn.addEventListener('click', this.action_button_pressed.bind(this, btn));
   }
 
   init_save_button() {
     const btn = document.getElementById('btnSave');
     const url = document.getElementById('robot_url');
     btn.addEventListener('click', e => this.actionlist.save(url.value));
+  }
+
+  init_modal() {
+    const validateButton = document.getElementById("ValidateAction");
+    validateButton.addEventListener('click', this.validate_modal.bind(this))
+  }
+
+  action_button_pressed(btn) {
+    if (!btn.actionclass) return;
+    const action = new btn.actionclass();
+    if (action.modalhtml) {
+      document.getElementById("ActionModalTitle").textContent = btn.textContent;
+      const amb = document.getElementById("ActionModalBody");
+      amb.textContent = "";
+      amb.appendChild(action.modalhtml());
+      this.modalaction = action;
+      $("#actionModal").modal()
+    } else {
+      this.actionlist.add(action);
+    }
+  }
+
+  validate_modal() {
+    if (!this.modalaction) return;
+    if (this.modalaction.modalvalidate)
+      this.modalaction.modalvalidate(document.getElementById("ActionModalBody"));
+    this.actionlist.add(this.modalaction);
+    this.modalaction = null;
   }
 
   zone_xy(x, y) {
@@ -76,47 +88,3 @@ export class UserInterface {
   }
 }
 
-$('#rotateKnob').jsRapKnob({
-  position:0.5,
-  step:10,
-  onChange:function(value){
-     $(".rapKnobCaption",this).text('Angle ' + (Math.floor(value * 360)-180) + '°');
-     $('#modalOutput').val(Math.floor(value * 360)-180);
-  },
-});
-
-$('#moveRange').attr({
-    min:-50,
-    max:50,
-    step:2,
-    value:0,
-});
-$('#moveRange').on("click", function(e) {
-  const t = e.target;
-  const r = t.getBoundingClientRect();
-  const min = Number(t.min);
-  const max = Number(t.max);
-  t.value = Math.round((e.clientX-r.left)/(r.right-r.left)*(max-min)+min);
-  t.dispatchEvent(new Event('change'));
-});
-$('#moveRange').on("input change", function() {
-  $('#modalOutput').val(this.value);
-});
-
-$('#actionModal').on('show.bs.modal', function (event) {
-  var button = $(event.relatedTarget)[0]; // Button that triggered the modal
-  var thisAction = button.actionclass;
-  document.getElementById("ValidateAction").actionclass = thisAction;
-
-  // Update the modal's content
-  var modal = $(this)
-  modal.find('.modal-title').text(button.textContent);
-
-  let domToHide = modal.find('.modal-body').children()
-  domToHide.each(function(index, element) {
-    if(element.id != "modalOutput") element.style.display = 'none';
-  });
-
-  let domToShow = modal.find('.modal-body').find(thisAction.linkedDOM)[0];
-  domToShow.style.display = 'block';
-})

@@ -24,12 +24,6 @@ function btns() {
 
 class MoveAction {
   static label = 'Avancer / Reculer';
-  static attributes = {
-    "toggle" : "modal",
-    "target" : "#actionModal",
-    "value"  : 0
-  };
-  static linkedDOM = ".moveRange";
 
   constructor() {
     this.distance = 1;
@@ -37,10 +31,6 @@ class MoveAction {
 
   set_distance(v) {
     this.distance = v;
-  }
-
-  set_value(v) {
-    this.set_distance(v/100);
   }
 
   li() {
@@ -60,16 +50,39 @@ class MoveAction {
       "distance": "" + this.distance
     };
   }
+
+  modalhtml() {
+    const frag = document.createDocumentFragment();
+    const range = document.createElement("input");
+    range.type = "range";
+    range.min = -50;
+    range.max = 50;
+    range.value = 0;
+    frag.appendChild(range);
+    const output = document.createElement("output");
+    output.value = 0;
+    frag.appendChild(output);
+    range.addEventListener("click", e => {
+      const t = e.target;
+      const r = t.getBoundingClientRect();
+      const min = Number(t.min);
+      const max = Number(t.max);
+      t.value = Math.round((e.clientX-r.left)/(r.right-r.left)*(max-min)+min);
+      t.dispatchEvent(new Event('change'));
+    });
+    const rangechanged = () => { output.value = range.value };
+    range.addEventListener("input", rangechanged);
+    range.addEventListener("change", rangechanged);
+    return frag;
+  }
+
+  modalvalidate(dom) {
+    this.set_distance(dom.getElementsByTagName("output")[0].value/100);
+  }
 }
 
 class RotateAction {
   static label = 'Tourner';
-  static attributes = {
-    "toggle" : "modal",
-    "target" : "#actionModal",
-    "value"  : 0
-  };
-  static linkedDOM = ".rapKnob";
 
   constructor() {
     this.angle = 0;
@@ -77,10 +90,6 @@ class RotateAction {
 
   set_angle(a) {
     this.angle = a;
-  }
-
-  set_value(a) {
-    this.set_angle(a);
   }
 
   li() {
@@ -95,6 +104,29 @@ class RotateAction {
       "_type": "MoveRotate",
       "angle": "" + this.angle
     };
+  }
+
+  modalhtml() {
+    const frag = document.createDocumentFragment();
+    const knob = document.createElement("div");
+    knob.style.width = "300px";
+    frag.appendChild(knob);
+    const output = document.createElement("output");
+    frag.appendChild(output);
+    $(knob).jsRapKnob({
+      position:0.5,
+      step:10,
+      onChange:function(value){
+        const v = Math.floor(value * 360) - 180;
+        knob.getElementsByClassName("rapKnobCaption")[0].textContent = "Angle " + v + "°";
+        output.value = v;
+      },
+    });
+    return frag;
+  }
+
+  modalvalidate(dom) {
+    this.set_angle(dom.getElementsByTagName("output")[0].value);
   }
 }
 
@@ -194,7 +226,6 @@ export class ActionList {
       btn.textContent  = c.label;
       btn.classList.add("ActionButton");
       btn.actionclass = c;
-      if (c.attributes) Object.assign(btn.dataset, c.attributes);
       fragment.appendChild(btn);
       fragment.appendChild(document.createElement('br'));
     }
