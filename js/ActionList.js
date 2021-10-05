@@ -213,6 +213,7 @@ export class ActionList {
       btn.actionclass = c;
       fragment.appendChild(btn);
       fragment.appendChild(document.createElement('br'));
+      fragment.appendChild(document.createElement('br'));
     }
     return fragment;
   }
