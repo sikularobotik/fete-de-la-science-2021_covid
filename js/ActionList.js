@@ -1,3 +1,5 @@
+import { Range } from './CustomControls.js'
+
 function btns() {
   const div = document.createElement('div');
 
@@ -52,32 +54,12 @@ class MoveAction {
   }
 
   modalhtml() {
-    const frag = document.createDocumentFragment();
-    const range = document.createElement("input");
-    range.type = "range";
-    range.min = -50;
-    range.max = 50;
-    range.value = 0;
-    frag.appendChild(range);
-    const output = document.createElement("output");
-    output.value = 0;
-    frag.appendChild(output);
-    range.addEventListener("click", e => {
-      const t = e.target;
-      const r = t.getBoundingClientRect();
-      const min = Number(t.min);
-      const max = Number(t.max);
-      t.value = Math.round((e.clientX-r.left)/(r.right-r.left)*(max-min)+min);
-      t.dispatchEvent(new Event('change'));
-    });
-    const rangechanged = () => { output.value = range.value };
-    range.addEventListener("input", rangechanged);
-    range.addEventListener("change", rangechanged);
-    return frag;
+    const range = new Range();
+    return range.html();
   }
 
   modalvalidate(dom) {
-    this.set_distance(dom.getElementsByTagName("output")[0].value/100);
+    this.set_distance(dom.getElementsByTagName("canvas")[0].range.value/100);
   }
 }
 
