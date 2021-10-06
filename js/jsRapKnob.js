@@ -1,6 +1,6 @@
 (function($){
 $.fn.jsRapKnob = function(options){
-	
+
 return this.each(function(){
 	this.opt = $.extend({
 		enabled:true,
@@ -14,10 +14,9 @@ return this.each(function(){
 	let base = this;
 	let button = 0;
 	let inBar = $('<div>').addClass('rapKnobIn').appendTo($(this));
-	let caption = $('<div>').addClass('rapKnobCaption').text(this.opt.caption).appendTo($(this));
 	let w = $(this).width();
 	$(this).css({height:w});
-	
+
 	if(this.opt.enabled)
 		$(this).bind({
 			click : function(e){
@@ -41,8 +40,8 @@ return this.each(function(){
 				if(this.opt.onMouseUp)
 					this.opt.onMouseUp.call(this,this.opt.position,this.opt.step);
 			}
-		});	
-	
+		});
+
 	function Update(e){
 		let cx = e.clientX - $(base)[0].getBoundingClientRect().left;
 		let cy = e.clientY - $(base)[0].getBoundingClientRect().top;
@@ -53,7 +52,7 @@ return this.each(function(){
 			p = p < 0.125 ? 0 : (p - 0.125) * 0.5 / 0.375;
 		base.SetPosition(p);
 	}
-			
+
 	this.SetPosition = function(p){
 		let s = 0;
 		if(this.opt.steps > 1){
@@ -68,7 +67,7 @@ return this.each(function(){
 		if(this.opt.onChange)
 			this.opt.onChange.call(this,p,s);
 	}
-	
+
 	this.SetPosition(this.opt.position);
 })
 

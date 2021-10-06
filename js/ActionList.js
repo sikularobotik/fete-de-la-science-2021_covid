@@ -93,14 +93,17 @@ class RotateAction {
     const knob = document.createElement("div");
     knob.style.width = "300px";
     frag.appendChild(knob);
+    frag.appendChild(document.createElement("br"));
     const output = document.createElement("output");
+    output.style.display = "inline";
     frag.appendChild(output);
+    output.insertAdjacentHTML('beforeBegin', "<span>Angle </span>");
+    output.insertAdjacentHTML('afterEnd', "<span>°</span>");
     $(knob).jsRapKnob({
       position:0.5,
       step:10,
       onChange:function(value){
         const v = Math.floor(value * 360) - 180;
-        knob.getElementsByClassName("rapKnobCaption")[0].textContent = "Angle " + v + "°";
         output.value = v;
       },
     });
