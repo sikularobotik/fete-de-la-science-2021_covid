@@ -1,4 +1,4 @@
-import { Range } from './CustomControls.js'
+import { Range, Dial } from './CustomControls.js'
 
 function btns() {
   const div = document.createElement('div');
@@ -89,29 +89,12 @@ class RotateAction {
   }
 
   modalhtml() {
-    const frag = document.createDocumentFragment();
-    const knob = document.createElement("div");
-    knob.style.width = "300px";
-    frag.appendChild(knob);
-    frag.appendChild(document.createElement("br"));
-    const output = document.createElement("output");
-    output.style.display = "inline";
-    frag.appendChild(output);
-    output.insertAdjacentHTML('beforeBegin', "<span>Angle </span>");
-    output.insertAdjacentHTML('afterEnd', "<span>°</span>");
-    $(knob).jsRapKnob({
-      position:0.5,
-      step:10,
-      onChange:function(value){
-        const v = Math.floor(value * 360) - 180;
-        output.value = v;
-      },
-    });
-    return frag;
+    const dial = new Dial();
+    return dial.html();
   }
 
   modalvalidate(dom) {
-    this.set_angle(dom.getElementsByTagName("output")[0].value);
+    this.set_angle(dom.getElementsByTagName("canvas")[0].dial.value);
   }
 }
 
