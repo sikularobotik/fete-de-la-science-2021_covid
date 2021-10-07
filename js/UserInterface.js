@@ -21,11 +21,29 @@ export class UserInterface {
   init_save_button() {
     const btn = document.getElementById('btnSave');
     const url = document.getElementById('robot_url');
+    const restart = document.getElementById("restart_iamultiseq");
     btn.addEventListener('click', e => {
       btn.disabled = true;
+      const showmsg = code => { alert(code == 200 ? "Envoyé" : "Erreur d'envoi"); };
       this.actionlist.save(url.value, code => {
         btn.disabled = false;
-	alert(code == 200 ? "Envoyé" : "Erreur d'envoi");
+        if (restart.checked) {
+          const u1 = new URL('/pid/stop_iamultiseq', url.value);
+          const xhr1 = new XMLHttpRequest();
+          xhr1.open('GET', u1.href, true);
+          xhr1.onload = () => {
+            const u2 = new URL('/pid/start_iamultiseq', url.value);
+            const xhr2 = new XMLHttpRequest();
+            xhr2.open('GET', u2.href, true);
+            xhr2.onload = () => {
+              showmsg(code);
+            };
+            xhr2.send();
+          };
+          xhr1.send();
+        } else {
+          showmsg(code);
+        }
       });
     });
   }
