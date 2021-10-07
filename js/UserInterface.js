@@ -24,6 +24,7 @@ export class UserInterface {
     const restart = document.getElementById("restart_iamultiseq");
     btn.addEventListener('click', e => {
       btn.disabled = true;
+      document.getElementById("save_config").style.display = "none";
       const showmsg = code => { alert(code == 200 ? "Envoyé" : "Erreur d'envoi"); };
       this.actionlist.save(url.value, code => {
         btn.disabled = false;
