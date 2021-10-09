@@ -98,6 +98,73 @@ class RotateAction {
   }
 }
 
+class FlagAction {
+  static label = 'Actionner le drapeau';
+
+  constructor() {
+    this.updown = "up";
+    this.updown_notvalidated = "up";
+  }
+
+  li() {
+    const li = document.createElement('li');
+    if (this.updown == "up") {
+      li.textContent = "Lever le drapeau";
+    } else {
+      li.textContent = "Baisser le drapeau";
+    }
+    li.appendChild(btns());
+    return li;
+  }
+
+  json() {
+    if (this.updown == "up") {
+      return {
+        "_type": "Include",
+        "prog_name": "action__drapeau"
+      };
+    } else {
+      return {
+        "_type": "Include",
+        "prog_name": "action__drapeau_down"
+      };
+    }
+  }
+
+  modalhtml() {
+    const frag = document.createDocumentFragment();
+    const btnUp = document.createElement('button');
+    const btnDown = document.createElement('button');
+
+    btnUp.classList.add("btn-success");
+
+    btnUp.textContent = 'Lever';
+    btnUp.onclick = () => {
+      btnUp.classList.add("btn-success");
+      btnDown.classList.remove("btn-success");
+      this.updown_notvalidated = "up";
+    }
+    frag.appendChild(btnUp);
+
+    frag.appendChild(document.createElement("br"));
+    frag.appendChild(document.createElement("br"));
+
+    btnDown.textContent = 'Baisser';
+    btnDown.onclick = () => {
+      btnUp.classList.remove("btn-success");
+      btnDown.classList.add("btn-success");
+      this.updown_notvalidated = "down";
+    }
+    frag.appendChild(btnDown);
+
+    return frag;
+  }
+
+  modalvalidate(dom) {
+    this.updown = this.updown_notvalidated;
+  }
+}
+
 export class ActionList {
   constructor(ul) {
     this.ul = ul;
@@ -192,7 +259,7 @@ export class ActionList {
 
   static get_button_list_fragment() {
     const fragment = document.createDocumentFragment();
-    for (const c of [MoveAction, RotateAction]) {
+    for (const c of [MoveAction, RotateAction, FlagAction]) {
       const btn = document.createElement('button');
       btn.textContent  = c.label;
       btn.classList.add("ActionButton");
